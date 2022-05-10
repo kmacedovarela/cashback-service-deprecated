@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cashback Service</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+    <script src="./controller.js"></script>
+</head>
+
+<body ng-app="CashbackModule" ng-controller="CashbackController">
+
+    <div class="container">
+
+        <div id="description" class="row">
+            <h2>Cashback service</h2>
+            <span class="col-sm-10 d-md-flex" > Check the progress the cashback obtained by shopping in the retail.</span>
+        </div>
+
+        <div id="datalist" class="row align-items-center">
+            <span class="col-sm-7 d-md-flex gy-3"><h4>Customers' cashback wallets</h4></span>
+
+            <div id="pagination-row" class="col-sm-3 d-md-flex justify-content-md-end gy-3" >
+                <nav aria-label="navigation">
+                    <ul class="pagination align-items-center">
+                        <li class="page-item"><a class="page-link btn" ng-click="previousPage()">Previous</a></li>
+                        <li class="p-3">
+                            <span> {{page+1}} / {{totalCashback}} </span>
+                        </li>
+
+                        <li class="page-item"><a class="page-link" ng-click="nextPage()">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-2 d-md-flex gy-0">
+                <button class="btn btn-outline-primary btn-sm  p-1" type="button" data-bs-toggle="collapse" data-bs-target=".accordion-collapse">Show all / Hide all</button>
+            </div>
+        </div>
+
+
+        <div class="accordion " id="cashbackList">
+            <div class="accordion-item"  ng-repeat="customer in customers">
+                <h2 class="accordion-header " id="heading_{{$index}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{$index}}" aria-expanded="false"  aria-controls="collapse_{{$index}}">
+                        {{ customer.name }}, {{ customer.status }} status, Total cashback: $ {{ customer.cashback.amount }}
+                    </button>
+                </h2>
+
+                <div id="collapse_{{$index}}" class="accordion-collapse collapse show" aria-labelledby="heading_{{$index}}" data-bs-parent="#cashbackList">
+                    <div class="accordion-body">
+                        <table class="table table-sm .table-borderless caption-top">
+                            <caption>List of expenses</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="expense in customer.cashback.expenses">
+                                <td>
+                                    {{expense.id}}
+                                </td>
+                                <td>$ {{ expense.amount }}</td>
+                                <td>{{ expense.date }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+    </div>
+
+
+    </div>
+</body>
+</html>
